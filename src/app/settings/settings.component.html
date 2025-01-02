@@ -1,0 +1,14 @@
+<h2>Impostazioni - Seleziona la tua Rete Preferita</h2>
+
+<mat-form-field appearance="fill">
+  <mat-label>Rete Preferita</mat-label>
+  <mat-select [(ngModel)]="selectedNetwork">
+    <mat-option *ngFor="let network of networks" [value]="network.name">
+      {{network.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="saveSettings()">
+  Salva
+</button>

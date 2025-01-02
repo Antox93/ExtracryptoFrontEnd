@@ -1,0 +1,42 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: #3f51b5; /* Blu della toolbar */
+  }
+  
+  .logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white; /* Colore bianco per visibilità su sfondo blu */
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  /* Stile per il pulsante di Login */
+  .custom-login-button {
+    color: #ffeb3b !important; /* Colore giallo per risaltare su sfondo blu */
+    font-weight: bold;
+  }
+  
+  /* Stile per il pulsante di Sign Up */
+  .signup-button {
+    background-color: white !important; /* Sfondo bianco per risaltare sulla barra blu */
+    color: #3f51b5 !important; /* Testo blu per creare contrasto */
+    font-weight: bold;
+  }
+  .custom-login-button {
+    color: white !important; /* Colore del testo in bianco per risaltare */
+    background-color: #f44336 !important; /* Sfondo rosso per risaltare bene sul blu */
+    font-weight: bold;
+  }
+  
+  button {
+    margin-left: 10px;
+  }
+  button {
+    margin-left: 10px;
+  }
+  

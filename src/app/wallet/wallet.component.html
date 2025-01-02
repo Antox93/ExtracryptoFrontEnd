@@ -1,0 +1,11 @@
+<h2>Wallet</h2>
+
+<mat-form-field appearance="fill">
+  <mat-label>Rete</mat-label>
+  <mat-select [(value)]="selectedNetwork" (selectionChange)="onSelectionChange($event)">
+    <mat-option value="all">ALL</mat-option>
+    <mat-option *ngFor="let network of networks" [value]="network.name">
+      {{network.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1,0 +1,48 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Angular specific
+.angular/
+.angular/cache/
+.angular.json
+package-lock.json
+
+# Compilati e generati
+dist/
+out-tsc/
+coverage/
+temp/
+
+# Editor specifici
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Sistema operativo specifico
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+yarn-error.log
+
+# IDE specific files
+*.swp
+*.iml
+*.ipr
+*.iws
+
+# Ambiente
+.env
+.env.*.local
+
+# Browser debug files
+safari_debug.log
+

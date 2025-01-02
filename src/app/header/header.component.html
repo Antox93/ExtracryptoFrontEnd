@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+  <span class="logo" (click)="goToHome()" style="cursor: pointer;">Extra Crypto</span>
+  <span class="spacer"></span>
+
+  <div *ngIf="isLoggedIn">
+    <span class="welcome-message">Benvenuto, {{ userName }}</span> <!-- Aggiunto per mostrare il nome dell'utente -->
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onSettings()">Impostazioni</button>
+      <button mat-menu-item (click)="onProfile()">Profilo</button>
+      <button mat-menu-item (click)="onWallet()">Wallet</button>
+      <button mat-menu-item (click)="onFavorites()">Preferiti</button>
+      <button mat-menu-item color="warn" (click)="onLogout()">Logout</button>
+    </mat-menu>
+  </div>
+  
+  <div *ngIf="!isLoggedIn">
+    <button mat-raised-button color="accent" (click)="openLoginDialog()">Log In</button>
+    <button mat-raised-button color="accent" (click)="openSignupDialog()">Sign Up</button>
+  </div>
+</mat-toolbar>
+
+<style>
+  .spacer {
+    flex: 1 1 auto;
+  }
+  .welcome-message {
+    margin-right: 10px;
+    font-size: 16px;
+    color: white;
+  }
+</style>
