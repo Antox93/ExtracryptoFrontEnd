@@ -1,67 +1,54 @@
-import { Component } from '@angular/core';
-import { Network, NetworkService } from '../network.service';
-import { SessionService } from '../session.service';
-import { UserService } from '../user-service';
-import { MatSelectChange } from '@angular/material/select';
-import { User } from '../user';
+import { Component, OnInit } from '@angular/core';
 import { WalletService } from '../wallet.service';
 import { WalletDto } from '../wallet-dto';
+import { User } from '../user';
 
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
-  styleUrl: './wallet.component.css'
+  styleUrls: ['./wallet.component.css']
 })
+export class WalletComponent implements OnInit {
+  wallet: WalletDto[] = [];
+  filteredWallet: WalletDto[] = [];
+  selectedNetwork: string = 'all';
+ 
+
+  constructor(private walletService: WalletService) {}
+
+  ngOnInit(): void {
+    this.loadAllWallet();
+  }
 
 
-
-export class WalletComponent {
-   networks: Network[] = [];
-   wallet: WalletDto[] = [];
-    selectedNetwork: string | null = null;
+  loadAllWallet(): void {
+    const user : User = JSON.parse(sessionStorage.getItem('currentUser')!);
+    this.walletService.getAllWallet(user.addressId).subscribe((data) => {
+      console.log('Dati ricevuti dal backend:', data);
+      this.wallet = data;
+      this.filteredWallet = data;
+    }, (error) => {
+      console.error('Errore nel caricamento del wallet:', error); 
+    });
+  }
   
-    constructor(
-      private networkService: NetworkService,
-      private sessionService: SessionService,
-      private walletService: WalletService
-    ) {}
+
   
-    ngOnInit(): void {
-      this.sessionService.checkLogin();
-      this.loadNetworks();
-      this.selectedNetwork="all";
-      this.loadWallet();
-    }
-  
-
-
-  loadNetworks(): void {
-      this.networkService.getAllNetworks().subscribe(
-        (networks: Network[]) => {
-          console.log('Reti caricate:', networks);
-          this.networks = networks;
-        },
-        (error) => {
-          console.error('Errore nel caricamento delle reti:', error);
-        }
-      );
-    }
-
-    onSelectionChange(event: MatSelectChange) {
-      console.log(event.value);
-    }
-
-    loadWallet(){
+  filterWallet(): void {
+    if (this.selectedNetwork === 'all') {
+      this.filteredWallet = this.wallet;
+    } else {
       const user : User = JSON.parse(sessionStorage.getItem('currentUser')!);
-      this.walletService.getAllWallet(user.addressId).subscribe(
-        (wallet) => {
-          console.log('Crypto caricate:', wallet);
-          this.wallet = wallet;
-        },
-        (error) => {
-          console.error('Errore nel caricamento delle reti:', error);
-        }
-      );
+      this.walletService
+        .getWalletByNetwork(user.addressId, this.selectedNetwork)
+        .subscribe((data) => {
+          this.filteredWallet = data;
+        });
     }
+  }
 
+ 
+  onNetworkChange(): void {
+    this.filterWallet();
+  }
 }

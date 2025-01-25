@@ -39,6 +39,6 @@ export class LoginComponent {
   }
 
   onClose(): void {
-    this.dialogRef.close(); // Chiude il dialogo
+    this.dialogRef.close(); 
   }
 }

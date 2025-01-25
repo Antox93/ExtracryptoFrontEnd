@@ -31,6 +31,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { HomeComponent } from './home/home.component';
 import { CryptoDetailComponent } from './crypto-detail/crypto-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { SendCryptoComponent } from './send-crypto/send-crypto.component';
+import { ReceiveCryptoComponent } from './receive-crypto/receive-crypto.component';
 
 
 
@@ -46,7 +48,9 @@ import { WalletComponent } from './wallet/wallet.component';
     SettingsComponent,
     HomeComponent,
     CryptoDetailComponent,
-    WalletComponent
+    WalletComponent,
+    SendCryptoComponent,
+    ReceiveCryptoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,17 +1,28 @@
 <mat-toolbar color="primary">
   <span class="logo" (click)="goToHome()" style="cursor: pointer;">Extra Crypto</span>
   <span class="spacer"></span>
-
-  <div *ngIf="isLoggedIn">
-    <span class="welcome-message">Benvenuto, {{ userName }}</span> <!-- Aggiunto per mostrare il nome dell'utente -->
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
+  <div *ngIf="isLoggedIn" style="display: flex; align-items: center;">
+    
+      <button  style= "color:aliceblue;margin-left: 10px;" mat-menu-item [matMenuTriggerFor]="scambia">
+       Scambia
+     </button>
+     <mat-menu #scambia="matMenu">
+       <button mat-menu-item (click)="openSendDialog()">Invia</button>
+       <button mat-menu-item (click)="openReceiveDialog()">Ricevi</button>
+       
+     </mat-menu>
+      <button mat-menu-item (click)="onWallet()" style="margin-left: 10px; color:aliceblue">Wallet</button>
+      <button mat-menu-item (click)="onFavorites()" style="margin-left: -15px;color:aliceblue">Preferiti</button>
+    
+     
+    <button  style= "margin-right:30px; color:aliceblue; margin-bottom: 8px;" mat-icon-button [matMenuTriggerFor]="menu">
+       {{ userName }}
+      
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="onSettings()">Impostazioni</button>
       <button mat-menu-item (click)="onProfile()">Profilo</button>
-      <button mat-menu-item (click)="onWallet()">Wallet</button>
-      <button mat-menu-item (click)="onFavorites()">Preferiti</button>
+      
       <button mat-menu-item color="warn" (click)="onLogout()">Logout</button>
     </mat-menu>
   </div>

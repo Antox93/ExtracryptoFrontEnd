@@ -1,11 +1,33 @@
 <h2>Wallet</h2>
 
+
 <mat-form-field appearance="fill">
   <mat-label>Rete</mat-label>
-  <mat-select [(value)]="selectedNetwork" (selectionChange)="onSelectionChange($event)">
+  <mat-select [(value)]="selectedNetwork" (selectionChange)="onNetworkChange()">
     <mat-option value="all">ALL</mat-option>
-    <mat-option *ngFor="let network of networks" [value]="network.name">
-      {{network.name}}
+    <mat-option *ngFor="let crypto of wallet" [value]="crypto.network">
+      {{ crypto.network }}
     </mat-option>
   </mat-select>
 </mat-form-field>
+
+
+<table mat-table [dataSource]="filteredWallet" class="mat-elevation-z8">
+  <ng-container matColumnDef="cryptoName">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let crypto"> {{ crypto.cryptoName }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="cryptoAmount">
+    <th mat-header-cell *matHeaderCellDef> Quantità </th>
+    <td mat-cell *matCellDef="let crypto"> {{ crypto.cryptoAmount }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dollarAmount">
+    <th mat-header-cell *matHeaderCellDef> Valore </th>
+    <td mat-cell *matCellDef="let crypto"> {{ crypto.dollarAmount | currency:'USD':'symbol' }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['cryptoName', 'cryptoAmount', 'dollarAmount']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['cryptoName', 'cryptoAmount', 'dollarAmount'];"></tr>
+</table>

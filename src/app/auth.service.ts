@@ -19,13 +19,13 @@ export class AuthService {
 
   getUserName(): string | null {
     const user = sessionStorage.getItem('currentUser');
-    return user ? JSON.parse(user).username : null; // Usa 'username' invece di 'name'
+    return user ? JSON.parse(user).username : null; 
   }
 
   login(user: any): void {
     sessionStorage.setItem('currentUser', JSON.stringify(user));
     this.loggedIn.next(true);
-    this.currentUser.next(user.username); // Usa 'username' invece di 'name'
+    this.currentUser.next(user.username); 
   }
 
   logout(): void {
@@ -34,3 +34,4 @@ export class AuthService {
     this.currentUser.next(null);
   }
 }
+

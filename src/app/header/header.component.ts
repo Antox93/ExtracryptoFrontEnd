@@ -4,6 +4,8 @@ import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { SignupComponent } from '../signup/signup.component';
+import { ReceiveCryptoComponent } from '../receive-crypto/receive-crypto.component';
+import { SendCryptoComponent } from '../send-crypto/send-crypto.component';
 
 @Component({
   selector: 'app-header',
@@ -55,12 +57,33 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',
     });
+    
 
     dialogRef.afterClosed().subscribe(() => {
       this.isLoggedIn = this.authService.isUserLoggedIn();
       this.userName = this.authService.getUserName();
     });
   }
+  openSendDialog(): void {
+    const dialogRef = this.dialog.open(SendCryptoComponent, {
+      width: '400px',
+    });
+    
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.isLoggedIn = this.authService.isUserLoggedIn();
+      this.userName = this.authService.getUserName();
+    });
+  }
+
+  openReceiveDialog(): void {
+    const dialogRef = this.dialog.open(ReceiveCryptoComponent, {
+      width: '400px',
+    });
+  }
+  
+  
+
 
   openSignupDialog(): void {
     this.dialog.open(SignupComponent, {
