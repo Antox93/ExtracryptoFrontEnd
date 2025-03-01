@@ -10,15 +10,21 @@ import { CryptoDto } from './crypto-dto';
   providedIn: 'root',
 })
 export class CryptoService {
-  private backendDataUrl = 'http://localhost:8080/enums/crypto/data';
+  private backendAllDataUrl = 'http://localhost:8080/enums/crypto/data/all';
   private backendDetailUrl = 'http://localhost:8080/enums/crypto/data/';
+  private backendDataUrl = 'http://localhost:8080/enums/crypto/data';
 
 
 
   constructor(private http: HttpClient) {}
 
-  getCryptoData(): Observable<CryptoDto> {
-    return this.http.get<any>(this.backendDataUrl);
+  getAllCryptoData(): Observable<CryptoDto> {
+    return this.http.get<any>(this.backendAllDataUrl);
+  }
+  getCryptoData(searchCrypto:number[]): Observable<CryptoDto> {
+    const url=this.backendDataUrl +'?searchCrypto='+ searchCrypto.join(',');
+    console.log(url);
+    return this.http.get<any>(url);
   }
  
   getCryptoDetail(id:string): Observable<CryptoDto> {

@@ -33,6 +33,11 @@ import { CryptoDetailComponent } from './crypto-detail/crypto-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { SendCryptoComponent } from './send-crypto/send-crypto.component';
 import { ReceiveCryptoComponent } from './receive-crypto/receive-crypto.component';
+import { FavouriteCryptoComponent } from './favourite-crypto/favourite-crypto.component';
+import { ProfileComponent } from './profile/profile.component';
+import { EditPasswordComponent } from './edit-password/edit-password.component';
+import { EditUsernameComponent } from './edit-username/edit-username.component';
+
 
 
 
@@ -50,7 +55,11 @@ import { ReceiveCryptoComponent } from './receive-crypto/receive-crypto.componen
     CryptoDetailComponent,
     WalletComponent,
     SendCryptoComponent,
-    ReceiveCryptoComponent
+    ReceiveCryptoComponent,
+    FavouriteCryptoComponent,
+    ProfileComponent,
+    EditPasswordComponent,
+    EditUsernameComponent,
   ],
   imports: [
     BrowserModule,

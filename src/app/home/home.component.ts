@@ -8,8 +8,8 @@ import { CryptoData } from '../crypto-data';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  cryptoData?: CryptoData; // Per i dati delle criptovalute
-  chartData: { dates: string[]; prices: number[] } | null = null; // Per i dati del grafico
+  cryptoData?: CryptoData; 
+  chartData: { dates: string[]; prices: number[] } | null = null; 
   loading: boolean = false;
   errorMessage: string = '';
 
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     console.log('HomeComponent inizializzato, caricamento dati criptovalute...');
     this.loading = true;
 
-    this.cryptoService.getCryptoData().subscribe(
+    this.cryptoService.getAllCryptoData().subscribe(
       (dto) => {
         console.log('Dati ricevuti:', dto);
 

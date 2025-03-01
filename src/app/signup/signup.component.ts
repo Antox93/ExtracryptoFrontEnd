@@ -11,7 +11,7 @@ import { UserService } from '../user-service';
 })
 
 export class SignupComponent {
-  email: string='';
+  username: string='';
   password: string= '';
   error?: string;
 
@@ -19,7 +19,7 @@ export class SignupComponent {
 
   onSubmit():void {
 
-    this.userService.sign(this.email, this.password)
+    this.userService.sign(this.username, this.password)
       .subscribe(
         ()=> {
           this.dialogRef.close();

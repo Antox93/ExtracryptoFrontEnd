@@ -42,6 +42,7 @@ export class HeaderComponent implements OnInit {
 
   onProfile(): void {
     console.log('Profilo');
+    this.router.navigate(['/profile']);
   }
 
   onWallet(): void {
@@ -51,6 +52,7 @@ export class HeaderComponent implements OnInit {
 
   onFavorites(): void {
     console.log('Preferiti');
+    this.router.navigate(['/favourite-crypto']);
   }
 
   openLoginDialog(): void {

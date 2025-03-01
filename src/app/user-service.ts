@@ -14,6 +14,7 @@ export class UserService {
   private USER_ENDPOINT = '/user';
   private LOGIN_ENDPOINT = this.USER_ENDPOINT+'/login';
   private CONFIG_ENDPOINT = this.USER_ENDPOINT+'/config';
+  private FAV_CRYPTO_ENDPOINT = this.USER_ENDPOINT+'/{userId}/favourite-crypto';
   
 
   constructor(private http: HttpClient) {
@@ -74,5 +75,85 @@ export class UserService {
     return this.http.patch<void>(ENDPOINT,{},{headers: headers,params:params})
 
   }
+  
+  getFavouriteCrypto(userId:string):Observable<number[]>{
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+      
+    });
+    let endpoint = Constants.HOST + this.FAV_CRYPTO_ENDPOINT;
+    endpoint=endpoint.replaceAll("{userId}",userId);
+    return this.http.get<number[]>(endpoint,{headers: headers})
+
+  }
+  
+  addFavouriteCrypto(userId:string,cryptoId:string):Observable<void>{
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+      
+    });
+    let endpoint = Constants.HOST + this.FAV_CRYPTO_ENDPOINT;
+    endpoint=endpoint.replaceAll("{userId}",userId);
+    endpoint=endpoint+'?cryptoId='+cryptoId;
+    return this.http.post<void>(endpoint,{headers: headers})
+
+  }
+  deleteFavouriteCrypto(userId:string,cryptoId:string):Observable<void>{
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+      
+    });
+    let endpoint = Constants.HOST + this.FAV_CRYPTO_ENDPOINT;
+    endpoint=endpoint.replaceAll("{userId}",userId);
+    endpoint=endpoint+'?cryptoId='+cryptoId;
+    return this.http.delete<void>(endpoint,{headers: headers})
+
+  }
+
+  changePassword(userId:string,newPassword:string,oldPassword:string):Observable<void>{
+    const encodedCredentials = btoa(`${newPassword}:${oldPassword}`);
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Authorization': `Basic ${encodedCredentials}`
+
+      
+    });
+    let endpoint = Constants.HOST + this.USER_ENDPOINT+'/{userId}/change-password';
+    endpoint=endpoint.replaceAll("{userId}",userId);
+    return this.http.get<void>(endpoint,{headers: headers})
+
+  }
+
+  changeUsername(userId:string,newUsername:string,oldPassword:string):Observable<void>{
+    const encodedCredentials = btoa(`${newUsername}:${oldPassword}`);
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Authorization': `Basic ${encodedCredentials}`
+
+      
+    });
+    let endpoint = Constants.HOST + this.USER_ENDPOINT+'/{userId}/change-username';
+    endpoint=endpoint.replaceAll("{userId}",userId);
+    return this.http.get<void>(endpoint,{headers: headers})
+
+  }
+
+
 
 }
+

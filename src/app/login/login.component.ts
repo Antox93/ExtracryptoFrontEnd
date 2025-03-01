@@ -10,7 +10,7 @@ import { User } from '../user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email: string = '';
+  username: string = '';
   password: string = '';
   loginError?: string;
 
@@ -23,7 +23,7 @@ export class LoginComponent {
   onSubmit(): void {
     this.loginError = '';
 
-    this.userService.login(this.email, this.password).subscribe(
+    this.userService.login(this.username, this.password).subscribe(
       (user: User) => {
         if (user == null) {
           this.loginError = 'Credenziali errate';
@@ -33,7 +33,7 @@ export class LoginComponent {
         }
       },
       (_err: any) => {
-        this.loginError = 'Email o password errati';
+        this.loginError = 'username o password errati';
       }
     );
   }

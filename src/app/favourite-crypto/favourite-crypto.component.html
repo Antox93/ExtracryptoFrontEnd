@@ -1,0 +1,82 @@
+<div *ngIf="loading">Caricamento dati criptovalute...</div>
+
+<div *ngIf="errorMessage">
+  <p>{{ errorMessage }}</p>
+</div>
+
+<div class="table-container" *ngIf="cryptoData && cryptoData.coin && cryptoData.coin.length> 0 && !loading">
+  <table mat-table [dataSource]="cryptoData.coin" class="mat-elevation-z8">
+    <!-- Definizione delle colonne -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }} ({{ element.symbol }})</td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let element">{{ element.quote.value.price | currency:'USD' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="change1h">
+      <th mat-header-cell *matHeaderCellDef>1h %</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'positive': element.quote.value.percent_change_1h >= 0, 'negative': element.quote.value.percent_change_1h < 0}">
+        {{ element.quote.value.percent_change_1h | percent:'1.2-2' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="change24h">
+      <th mat-header-cell *matHeaderCellDef>24h %</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'positive': element.quote.value.percent_change_24h >= 0, 'negative': element.quote.value.percent_change_24h < 0}">
+        {{ element.quote.value.percent_change_24h | percent:'1.2-2' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="change7d">
+      <th mat-header-cell *matHeaderCellDef>7d %</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'positive': element.quote.value.percent_change_7d >= 0, 'negative': element.quote.value.percent_change_7d < 0}">
+        {{ element.quote.value.percent_change_7d | percent:'1.2-2' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="marketCap">
+      <th mat-header-cell *matHeaderCellDef>Market Cap</th>
+      <td mat-cell *matCellDef="let element">{{ element.quote.value.market_cap | currency:'USD' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="volume">
+      <th mat-header-cell *matHeaderCellDef>Volume(24h)</th>
+      <td mat-cell *matCellDef="let element">{{ element.quote.value.volume_24h | currency:'USD' }}</td>
+    </ng-container>
+    <!--<ng-container matColumnDef="chart">
+      <th mat-header-cell *matHeaderCellDef>Last 7 Days</th>
+      <td mat-cell *matCellDef="let element">
+        <img [src]="element.chart" alt="Chart" class="chart-icon">
+      </td>
+    </ng-container>-->
+
+    <!-- Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/crypto', row.id]"></tr>
+  </table>
+</div>
+
+<!-- Styles for the table and container -->
+<style>
+  .table-container {
+    padding: 20px;
+  }
+
+  .positive {
+    color: green;
+  }
+
+  .negative {
+    color: red;
+  }
+
+  tr.mat-row {
+    cursor: pointer;
+  }
+
+  tr.mat-row:hover {
+    background-color: #f1f1f1;
+  }
+</style>
