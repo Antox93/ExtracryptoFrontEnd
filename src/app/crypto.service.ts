@@ -32,6 +32,12 @@ export class CryptoService {
     return this.http.get<any>(url);
   }
   
+  getCryptoHistoricalData(id: string): Observable<any> {
+    const url = `http://localhost:8080/enums/crypto/history/${id}`;
+    return this.http.get<any>(url);
+  }
+  
+  
 }  
 
 

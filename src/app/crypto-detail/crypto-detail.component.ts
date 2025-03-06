@@ -38,6 +38,7 @@ export class CryptoDetailComponent implements OnInit {
 
     changeFavourite(){
       const user : User = JSON.parse(sessionStorage.getItem('currentUser')!);
+      if(user) {
       if(this.star.includes("Empty")){
        
         this.userService.addFavouriteCrypto(String(user.id),this.id!) .subscribe(
@@ -59,9 +60,11 @@ export class CryptoDetailComponent implements OnInit {
       }
 
     }
+    }
 
     checkFavouriteCrypto(cryptoId: number){
         const user : User = JSON.parse(sessionStorage.getItem('currentUser')!);
+        if(user) {
         this.userService.getFavouriteCrypto(String(user.id)).subscribe(
           (list) => {
             console.log('Dati ricevuti:', list);
@@ -73,6 +76,7 @@ export class CryptoDetailComponent implements OnInit {
         );
       
       }
+    }
 
     
 }

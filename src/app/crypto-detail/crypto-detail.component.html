@@ -1,5 +1,6 @@
 <div *ngIf="crypto">
   <h1 style="display: inline-block">{{ crypto.name }}</h1>
+  
 <span >
   <img (click)="changeFavourite()" src={{star}} alt="Stella" style="width: 24px; height: 24px; margin-left: 20px;">
 
@@ -11,7 +12,10 @@
 
 
   <p>Prezzo attuale: {{ crypto.quote.value.price }} USD</p>
-  
+  <app-crypto-chart [selectedCrypto]="id || ''"></app-crypto-chart>
+
+
+
 </div>
 
 <canvas id="priceChart"></canvas>

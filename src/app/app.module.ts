@@ -37,6 +37,9 @@ import { FavouriteCryptoComponent } from './favourite-crypto/favourite-crypto.co
 import { ProfileComponent } from './profile/profile.component';
 import { EditPasswordComponent } from './edit-password/edit-password.component';
 import { EditUsernameComponent } from './edit-username/edit-username.component';
+import{NgChartsModule} from 'ng2-charts';
+import { CryptoChartComponent } from './crypto-chart/crypto-chart.component';
+
 
 
 
@@ -60,6 +63,8 @@ import { EditUsernameComponent } from './edit-username/edit-username.component';
     ProfileComponent,
     EditPasswordComponent,
     EditUsernameComponent,
+    CryptoChartComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -81,7 +86,8 @@ import { EditUsernameComponent } from './edit-username/edit-username.component';
     HttpClientModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    NgChartsModule
     
     
   ],
