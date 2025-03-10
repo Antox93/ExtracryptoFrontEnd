@@ -1,0 +1,21 @@
+<div class="crypto-info">
+  <table>
+    <tr>
+      <td><strong>Cap. di mercato:</strong></td>
+      <td>{{ crypto?.quote?.value?.market_cap ? (crypto.quote.value.market_cap | number:'1.0-0') + ' USD' : '-' }}</td>
+    </tr>
+    <tr>
+      <td><strong>Volume scambi 24h:</strong></td>
+      <td>{{ crypto?.quote?.value?.volume_24h ? (crypto.quote.value.volume_24h | number:'1.0-0') + ' USD' : '-' }}</td>
+    </tr>
+    <tr>
+      <td><strong>Offerta in circolazione:</strong></td>
+      <td>{{ crypto?.circulating_supply ? (crypto.circulating_supply | number:'1.0-0') : '-' }}</td>
+    </tr>
+    <tr>
+      <td><strong>Offerta massima:</strong></td>
+      <td>{{ crypto?.max_supply ? (crypto.max_supply | number:'1.0-0') : '-' }}</td>
+    </tr>
+  </table>
+</div>
+

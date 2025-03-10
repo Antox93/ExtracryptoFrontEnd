@@ -1,0 +1,30 @@
+.crypto-info-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 8px 12px;
+}
+
+tr:nth-child(odd) {
+  background: #f8f8f8;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}

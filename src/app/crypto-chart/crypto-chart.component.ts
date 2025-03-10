@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CryptoService } from '../crypto.service';
 
 @Component({
@@ -6,40 +6,68 @@ import { CryptoService } from '../crypto.service';
   templateUrl: './crypto-chart.component.html',
   styleUrls: ['./crypto-chart.component.css']
 })
-export class CryptoChartComponent implements OnInit, OnChanges {
-  @Input() selectedCrypto: string = '';  // Riceve la crypto selezionata dal parent component
+export class CryptoChartComponent implements OnInit {
+  @Input() cryptoId!: string;   // 🔹 ID della crypto (CoinMarketCap)
+  @Input() cryptoSlug!: string; // 🔹 Slug della crypto (CoinGecko)
 
-  cryptoChartData: any;
-  cryptoChartOptions: any;
+  cryptoChartData: any = {
+    labels: [],
+    datasets: [
+      {
+        label: '',
+        data: [],
+        borderColor: 'green',
+        backgroundColor: 'rgba(0, 255, 0, 0.2)',
+        pointBackgroundColor: 'red',
+        fill: true
+      }
+    ]
+  };
+
+  cryptoChartOptions: any = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: false,
+        min: 0,
+        max: 1
+      }
+    }
+  };
 
   constructor(private cryptoService: CryptoService) {}
 
   ngOnInit(): void {
-    if (this.selectedCrypto) {
-      this.loadCryptoData(this.selectedCrypto);
+    console.log("Crypto ID ricevuto:", this.cryptoId);
+    console.log("Crypto Slug ricevuto:", this.cryptoSlug);
+
+    if (this.cryptoSlug) {
+      this.loadCryptoData(this.cryptoSlug);
+    } else {
+      console.error("Errore: CryptoSlug non valido!");
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedCrypto'] && this.selectedCrypto) {
-      this.loadCryptoData(this.selectedCrypto);
-    }
-  }
+  loadCryptoData(cryptoSlug: string): void {
+    this.cryptoService.getCryptoHistoricalData(cryptoSlug).subscribe(
+      (response: any) => {
+        console.log("Dati storici ricevuti:", response);
 
-  loadCryptoData(cryptoId: string): void {
-    if (!cryptoId) {
-      console.error("Errore: ID Crypto non valido.");
-      return;
-    }
-
-    this.cryptoService.getCryptoHistoricalData(cryptoId).subscribe(
-      (response) => {
-        console.log(`Dati storici ricevuti per ${cryptoId}:`, response);
-        
         if (response && response.prices) {
-          this.updateChart(response);
+          const validPrices = response.prices.filter((data: any) =>
+            typeof data[1] === 'number' && !isNaN(data[1])
+          );
+
+          this.cryptoChartData.labels = validPrices.map((data: any) =>
+            new Date(data[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          );
+
+          this.cryptoChartData.datasets[0].label = `${this.cryptoSlug.toUpperCase()} (USD)`;
+          this.cryptoChartData.datasets[0].data = validPrices.map((data: any) => data[1]);
+
+          this.updateChartScale();
         } else {
-          console.error("Errore: dati storici non validi", response);
+          console.error('Errore: dati storici non trovati', response);
         }
       },
       (error) => {
@@ -48,40 +76,15 @@ export class CryptoChartComponent implements OnInit, OnChanges {
     );
   }
 
-  updateChart(response: any) {
-    const labels = response.prices.map((entry: any) => new Date(entry[0]).toLocaleTimeString());
-    const prices = response.prices.map((entry: any) => entry[1]);
+  updateChartScale(): void {
+    const prices: number[] = this.cryptoChartData.datasets[0].data
+      .filter((price: number) => typeof price === 'number' && !isNaN(price) && price > 0);
 
-    this.cryptoChartData = {
-      labels: labels,
-      datasets: [{
-        label: `${this.selectedCrypto.toUpperCase()} (USD)`,
-        data: prices,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: true
-      }]
-    };
-
-    this.cryptoChartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Orario'
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Prezzo (USD)'
-          },
-          beginAtZero: false
-        }
-      }
-    };
-}
-
+    if (prices.length > 0) {
+      this.cryptoChartOptions.scales.y.min = Math.min(...prices) * 0.98;
+      this.cryptoChartOptions.scales.y.max = Math.max(...prices) * 1.02;
+    } else {
+      console.error("Errore: nessun valore valido per il grafico.");
+    }
+  }
 }

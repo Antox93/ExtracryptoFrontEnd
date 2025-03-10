@@ -1,21 +1,15 @@
 <div *ngIf="crypto">
-  <h1 style="display: inline-block">{{ crypto.name }}</h1>
-  
-<span >
-  <img (click)="changeFavourite()" src={{star}} alt="Stella" style="width: 24px; height: 24px; margin-left: 20px;">
+  <h1 style="display: flex; align-items: center;">
+    {{ crypto.name }}
+    <img (click)="changeFavourite()" [src]="star" alt="Stella" 
+         style="width: 24px; height: 24px; margin-left: 10px; cursor: pointer;">
+  </h1>
+  {{ crypto?.quote?.value2?.price ? (crypto.quote.value2.price | number:'1.2-2') + ' USD' : '-' }}
 
 
+  <!-- Integrazione del componente info -->
+  <app-crypto-info [crypto]="crypto"></app-crypto-info>
 
-
-
-  </span>
-
-
-  <p>Prezzo attuale: {{ crypto.quote.value.price }} USD</p>
-  <app-crypto-chart [selectedCrypto]="id || ''"></app-crypto-chart>
-
-
-
+  <!-- Integrazione del componente chart -->
+  <app-crypto-chart *ngIf="crypto && slug" [cryptoId]="id" [cryptoSlug]="slug"></app-crypto-chart>
 </div>
-
-<canvas id="priceChart"></canvas>

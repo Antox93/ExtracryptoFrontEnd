@@ -1,15 +1,16 @@
-<div *ngIf="cryptoChartData && cryptoChartData.labels.length > 0" style="width: 100%; height: 400px;">
-        <canvas baseChart
-                [datasets]="cryptoChartData.datasets"
-                [labels]="cryptoChartData.labels"
-                [options]="cryptoChartOptions"
-                [legend]="true"
-                [chartType]="'line'">
-        </canvas>
+<div *ngIf="(cryptoChartData?.labels?.length ?? 0) > 0; else noDataTemplate" style="width: 100%; height: 400px;">
+    <canvas 
+        baseChart
+        [data]="cryptoChartData"
+        [options]="cryptoChartOptions"
+        [legend]="true"
+        [type]="'line'">
+    </canvas>
+</div>
+
+<!-- Messaggio di fallback se non ci sono dati -->
+<ng-template #noDataTemplate>
+    <div class="no-data">
+        <p>Nessun dato disponibile per questa criptovaluta.</p>
     </div>
-    
-    <!-- Messaggio se non ci sono dati -->
-    <div *ngIf="!cryptoChartData || cryptoChartData.labels.length === 0" class="no-data">
-        Nessun dato disponibile per questa criptovaluta.
-    </div>
-    
+</ng-template>

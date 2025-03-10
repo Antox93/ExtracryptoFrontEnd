@@ -13,8 +13,16 @@ export class CryptoService {
   private backendAllDataUrl = 'http://localhost:8080/enums/crypto/data/all';
   private backendDetailUrl = 'http://localhost:8080/enums/crypto/data/';
   private backendDataUrl = 'http://localhost:8080/enums/crypto/data';
-
-
+  
+  private coinMarketCapToCoinGecko: { [key: string]: string } = {
+    "1": "bitcoin",
+    "1027": "ethereum",
+    "74": "dogecoin",
+    "5426": "solana",
+    "5994": "shiba-inu",
+    "20396": "kaspa"
+  };
+  
 
   constructor(private http: HttpClient) {}
 
@@ -32,10 +40,24 @@ export class CryptoService {
     return this.http.get<any>(url);
   }
   
-  getCryptoHistoricalData(id: string): Observable<any> {
-    const url = `http://localhost:8080/enums/crypto/history/${id}`;
-    return this.http.get<any>(url);
-  }
+  getCryptoHistoricalData(slug: string) {
+    console.log(`📊 Recupero dati storici per slug: ${slug}`);
+    
+    if (!slug) {
+        console.error("❌ Errore: lo slug è undefined o vuoto!");
+        return new Observable(observer => {
+            observer.error('Slug non valido.');
+        });
+    }
+
+    const url = `http://localhost:8080/enums/crypto/history/${slug}`;
+    console.log(`🔍 URL generato per la richiesta: ${url}`);
+
+    return this.http.get(url);
+}
+
+
+  
   
   
 }  
